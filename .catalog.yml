@@ -1,0 +1,16 @@
+---
+version: '1'
+type: 'microservice'
+extras:
+  template: 'java-dropwizard'
+  tags:
+    - 'java-dropwizard'
+component:
+  name: 'mshell-template'
+  owner: 'Compass'
+  description: 'Template to easily build a service in 5 minutes'
+  awsProjectTag: 'mshell'
+  serviceClass: 'economy-class'
+  personalDataHandling: null
+  soxScope: null
+  paymentProcessing: null
