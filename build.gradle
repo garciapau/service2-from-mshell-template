@@ -8,20 +8,23 @@ buildscript {
             }
         }
     }
+    dependencies {
+        classpath 'net.skyscanner.mshell:code-quality-gradle-conventions:0.0.3'
+    }
 }
 
 
 plugins {
     id 'com.gradleup.shadow' version '8.3.5'
     id 'java'
-    id 'jacoco'
-    id 'org.sonarqube' version '6.0.1.5171'
+    id 'com.diffplug.spotless' version '7.0.2'
 }
 
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 apply plugin: 'application'
 apply plugin: 'idea'
+apply plugin: 'net.skyscanner.code-quality'
 
 java {
     toolchain {
@@ -31,7 +34,7 @@ java {
 
 project.ext {
     mockitoVersion = '5.15.2'
-    mshellVersion = '34.0.2'
+    mshellVersion = '34.0.4'
     junitVersion = '5.11.4'
     testcontainersVersion = '1.20.2'
     errorProneAnnotationsVersion = '2.36.0'
@@ -110,16 +113,6 @@ shadowJar {
     archiveVersion = ''
 }
 
-sonarqube {
-    properties {
-        property "sonar.projectKey", "skyscanner:mshell-template"
-        property "sonar.projectName", "skyscanner/mshell-template"
-        property "sonar.jacoco.reportPaths", "${project.layout.buildDirectory.getAsFile().get()}/jacoco/test.exec, ${project.layout.buildDirectory.getAsFile().get()}/jacoco/integration.exec"
-        property "sonar.github.repository", "skyscanner/mshell-template"
-        property "sonar.exclusions", "grpc/build/**/*" // Ensure generated gRPC protobuf files are ignored
-    }
-}
-
 build.dependsOn(shadowJar)
 
 run {
@@ -167,55 +160,12 @@ integration {
     }
 }
 
-jacoco {
-    toolVersion = "0.8.12"
-}
-
-// Ignore generated gRPC code. Keep this aligned with the proto generated types for best results
-def testReportExcludeFiles = [
-        'net/skyscanner/mshelltemplate/v1/HeartbeatServiceGrpc*',
-        'net/skyscanner/mshelltemplate/v1/HeartbeatProto*',
-        'net/skyscanner/mshelltemplate/v1/Ping*',
-        'net/skyscanner/mshelltemplate/v1/Pong*',
-        'net/skyscanner/mshelltemplate/v1/*Request*',
-        'net/skyscanner/mshelltemplate/v1/*Response*',
-]
-
-
-// SonarQube can use .exec files so don't need any other formats
-jacocoTestReport {
-    reports {
-        xml.required = false
-        csv.required = false
-        html.required = true // Useful for local development
-    }
-    afterEvaluate {
-        getClassDirectories().setFrom(classDirectories.files.collect {
-            fileTree(dir: it,
-                    exclude: testReportExcludeFiles
-            )
-        })
+spotless {
+    java {
+        target "src/**/*.java"
+        googleJavaFormat('1.21.0')
     }
 }
-
-jacocoTestCoverageVerification {
-    afterEvaluate {
-        getClassDirectories().setFrom(classDirectories.files.collect {
-            fileTree(dir: it,
-                    exclude: testReportExcludeFiles
-            )
-        })
-    }
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.4
-            }
-        }
-    }
-}
-
-check.dependsOn jacocoTestCoverageVerification
 
 // This gradle file was created before all plugins properly support duplicatesStrategy. Some internal tasks
 // have the duplicatesStrategy unset. This patches them to use 'exclude' as a default.
