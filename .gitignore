@@ -1,23 +1,43 @@
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Please see https://github.com/github/gitignore for some nice presets
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
+# Output directories
+build/
+out/
+target/
+bin/
+
+# Mac OS X files
+.DS_Store
+
+# IntelliJ IDEA files
+.idea/
 *.iml
 *.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+*.iws
 
-### VS Code ###
+# Eclipse files
+.settings
+.classpath
+.project
+
+# Log directory
+logs/
+
+# vim files
+.*.sw[a-z]
+*.un~
+
+# Java class files
+*.class
+
+# Maven dependencies
+dependency-reduced-pom.xml
+
+# Gradle
+.gradle
+
+# MShell Build
+dependencies.properties
+
+# VS Code
 .vscode/
-
-### Mac OS ###
-.DS_Store
