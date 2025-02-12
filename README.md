@@ -4,6 +4,7 @@
 # mshell-template
 PoC for cookie cutting services: Github Template + Github Action
 
+Doing the demo for the mshell template
 
 ## Running the Service locally
 ### As a Java Process
