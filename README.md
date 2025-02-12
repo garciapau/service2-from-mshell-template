@@ -2,7 +2,7 @@
 [![Powered by MShell](https://badges.prod.aws.skyscnr.com/badge?type=static&text=powered%20by&value=mshell&colour=%2300B2D6)](https://skyscanner.atlassian.net/l/cp/17g4epUL)
 
 # mshell-template
-PoC for cookiecutting services: Github Template + Github Action
+PoC for cookie cutting services: Github Template + Github Action
 
 
 ## Running the Service locally
