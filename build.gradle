@@ -33,10 +33,10 @@ java {
 }
 
 project.ext {
-    mockitoVersion = '5.15.2'
-    mshellVersion = '34.0.4'
-    junitVersion = '5.11.4'
-    testcontainersVersion = '1.20.2'
+    mockitoVersion = '5.15.9'
+    mshellVersion = '34.0.9'
+    junitVersion = '5.11.9'
+    testcontainersVersion = '1.20.9'
     errorProneAnnotationsVersion = '2.36.0'
 }
 

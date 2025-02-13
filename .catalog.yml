@@ -14,3 +14,5 @@ component:
   personalDataHandling: null
   soxScope: null
   paymentProcessing: null
+  public: false
+
